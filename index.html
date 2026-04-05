@@ -277,26 +277,26 @@
             </li>
 
             <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">山阳区</button>
+                <button class="menu-btn" onclick="toggleMobileMenu(this)">床</button>
                 <div class="submenu">
-                    <button onclick="filter('花园小区')">花园小区</button>
-                    <button onclick="filter('滨江壹号')">滨江壹号</button>
+                    <button onclick="filter('软包床')">软包床</button>
+                    <button onclick="filter('实木床')">实木床</button>
                 </div>
             </li>
 
             <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">马村区</button>
+                <button class="menu-btn" onclick="toggleMobileMenu(this)">餐桌</button>
                 <div class="submenu">
-                    <button onclick="filter('城市花园')">城市花园</button>
-                    <button onclick="filter('蓝天华府')">蓝天华府</button>
+                    <button onclick="filter('不可折叠餐桌')">不可折叠餐桌</button>
+                    <button onclick="filter('可折叠餐桌')">可折叠餐桌</button>
                 </div>
             </li>
 
             <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">解放区</button>
+                <button class="menu-btn" onclick="toggleMobileMenu(this)">沙发</button>
                 <div class="submenu">
-                    <button onclick="filter('幸福里')">幸福里</button>
-                    <button onclick="filter('学府苑')">学府苑</button>
+                    <button onclick="filter('皮沙发')">皮沙发</button>
+                    <button onclick="filter('布沙发')">布沙发</button>
                 </div>
             </li>
         </ul>
@@ -310,38 +310,21 @@
     <p>焦作沙沙家具馆 · 按区域分类展示真实安装效果</p>
 </div>
 
-<!-- 店铺门头照片 -->
-<div class="store-banner">
-    <img src="https://picsum.photos/1000/400?random=100" alt="焦作沙沙家具馆-门头照片">
-</div>
-
 <!-- 图片展示区 -->
 <div class="gallery">
-    <div class="gallery-item" data-category="花园小区" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=1" alt="花园小区">
+    <!-- 床 -->
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/c1.jpg" alt="软包床">
     </div>
-    <div class="gallery-item" data-category="花园小区" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=2" alt="花园小区">
+    <!-- 餐桌 -->
+    <div class="gallery-item" data-category="不可折叠餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz1.jpg" alt="不可折叠餐桌">
     </div>
-
-    <div class="gallery-item" data-category="滨江壹号" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=3" alt="滨江壹号">
+    <!-- 沙发 -->
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/sf1.jpg" alt="皮沙发">
     </div>
-
-    <div class="gallery-item" data-category="城市花园" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=4" alt="城市花园">
-    </div>
-
-    <div class="gallery-item" data-category="蓝天华府" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=5" alt="蓝天华府">
-    </div>
-
-    <div class="gallery-item" data-category="幸福里" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=6" alt="幸福里">
-    </div>
-    <div class="gallery-item" data-category="学府苑" onclick="openModal(this)">
-        <img src="https://picsum.photos/800/600?random=7" alt="学府苑">
-    </div>
+    
 </div>
 
 <!-- 放大预览 -->
