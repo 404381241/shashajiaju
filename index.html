@@ -17,7 +17,6 @@
             padding-top: 70px;
         }
 
-        /* 导航栏 */
         .navbar {
             position: fixed;
             top: 0;
@@ -43,7 +42,6 @@
             color: #333;
         }
 
-        /* 手机菜单按钮 */
         .menu-toggle {
             display: none;
             font-size: 24px;
@@ -52,12 +50,12 @@
             cursor: pointer;
         }
 
-        /* 电脑端导航 */
         .nav-menu {
             display: flex;
             gap: 8px;
             list-style: none;
             position: static;
+            flex-wrap: wrap;
         }
 
         .menu-item {
@@ -65,7 +63,9 @@
         }
 
         .menu-btn {
-            padding: 8px 14px;
+            min-width: 110px;
+            text-align: center;
+            padding: 8px 10px;
             background: #f1f1f1;
             border: none;
             border-radius: 5px;
@@ -81,7 +81,6 @@
             color: #fff;
         }
 
-        /* 二级下拉 */
         .submenu {
             display: none;
             position: absolute;
@@ -90,7 +89,7 @@
             background: #fff;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             border-radius: 5px;
-            min-width: 160px;
+            width: 160px;
             padding: 5px 0;
             z-index: 100;
         }
@@ -113,7 +112,6 @@
             display: block;
         }
 
-        /* 手机适配 */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -149,6 +147,7 @@
                 margin-left: 10px;
                 padding-left: 10px;
                 display: none;
+                width: auto;
             }
 
             .menu-item.active .submenu {
@@ -156,7 +155,6 @@
             }
         }
 
-        /* 店铺门头区域 */
         .store-banner {
             width: 100%;
             max-width: 1000px;
@@ -172,7 +170,10 @@
             display: block;
         }
 
-        /* 头部 */
+        .hide-banner {
+            display: none !important;
+        }
+
         .header {
             text-align: center;
             margin: 30px 0;
@@ -190,7 +191,6 @@
             margin-top: 5px;
         }
 
-        /* 图片网格 */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -224,7 +224,6 @@
             display: block;
         }
 
-        /* 放大预览 */
         .modal {
             display: none;
             position: fixed;
@@ -252,7 +251,6 @@
             cursor: pointer;
         }
 
-        /* 底部 */
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -266,68 +264,827 @@
 
 <body>
 
-<!-- 导航栏 -->
 <div class="navbar">
     <div class="nav-container">
         <div class="logo">焦作沙沙家具馆</div>
         <button class="menu-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('active')">☰</button>
+        <!-- 导航栏-->
         <ul class="nav-menu">
             <li class="menu-item">
                 <button class="menu-btn active" onclick="filter('all')">全部效果图</button>
             </li>
 
             <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">床</button>
+                <button class="menu-btn" onclick="filterCategory('床')">床</button>
                 <div class="submenu">
                     <button onclick="filter('软包床')">软包床</button>
                     <button onclick="filter('实木床')">实木床</button>
+                    <button onclick="filter('上下铺')">上下铺</button>
+                    <button onclick="filter('床架')">床架</button>
                 </div>
             </li>
 
             <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">餐桌</button>
-                <div class="submenu">
-                    <button onclick="filter('不可折叠餐桌')">不可折叠餐桌</button>
-                    <button onclick="filter('可折叠餐桌')">可折叠餐桌</button>
-                </div>
-            </li>
-
-            <li class="menu-item">
-                <button class="menu-btn" onclick="toggleMobileMenu(this)">沙发</button>
+                <button class="menu-btn" onclick="filterCategory('沙发')">沙发</button>
                 <div class="submenu">
                     <button onclick="filter('皮沙发')">皮沙发</button>
                     <button onclick="filter('布沙发')">布沙发</button>
+                </div>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-btn" onclick="filterCategory('餐桌')">餐桌</button>
+                <div class="submenu">
+                    <button onclick="filter('餐桌')">餐桌</button>
+                </div>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-btn" onclick="filterCategory('大柜')">大柜</button>
+                <div class="submenu">
+                    <button onclick="filter('大柜')">大柜</button>
+                </div>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-btn" onclick="filterCategory('茶几电视柜斗柜等')">茶几电视柜斗柜等</button>
+                <div class="submenu">
+                    <button onclick="filter('茶几电视柜斗柜等')">茶几电视柜斗柜等</button>
+                </div>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-btn" onclick="filterCategory('梳妆台')">梳妆台</button>
+                <div class="submenu">
+                    <button onclick="filter('梳妆台')">梳妆台</button>
                 </div>
             </li>
         </ul>
     </div>
 </div>
 
-
 <div class="header">
-    <br/>
     <h1>家具入户实景效果图</h1>
     <p>焦作沙沙家具馆 · 按区域分类展示真实安装效果</p>
 </div>
 
-<!-- 图片展示区 -->
-<div class="gallery">
-    <!-- 床 -->
-    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
-        <img src="tp/chuang/c1.jpg" alt="软包床">
-    </div>
-    <!-- 餐桌 -->
-    <div class="gallery-item" data-category="不可折叠餐桌" onclick="openModal(this)">
-        <img src="tp/cz/cz1.jpg" alt="不可折叠餐桌">
-    </div>
-    <!-- 沙发 -->
-    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
-        <img src="tp/sf/sf1.jpg" alt="皮沙发">
-    </div>
-    
+<div class="store-banner" id="banner">
+    <img src="https://picsum.photos/1000/400?random=100" alt="焦作沙沙家具馆-门头照片">
 </div>
 
-<!-- 放大预览 -->
+<div class="gallery">
+
+    <!-- 床架 -->
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (1).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (2).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (3).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (4).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (5).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (6).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (7).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (8).jpeg" alt="床架">
+    </div>
+    <div class="gallery-item" data-category="床架" onclick="openModal(this)">
+        <img src="tp/chuang/cj (9).jpeg" alt="床架">
+    </div>
+
+    <!-- 软包床 -->
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (1).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (10).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (11).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (12).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (13).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (14).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (15).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (16).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (17).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (18).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (19).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (2).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (20).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (21).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (22).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (23).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (24).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (25).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (26).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (27).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (28).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (29).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (3).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (3).JPG" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (30).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (31).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (32).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (33).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (34).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (35).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (36).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (37).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (38).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (39).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (4).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (4).JPG" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (40).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (41).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (42).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (43).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (44).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (45).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (46).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (47).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (48).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (49).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (5).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (50).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (51).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (52).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (53).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (54).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (55).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (56).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (57).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (58).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (59).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (6).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (60).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (61).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (62).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (63).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (64).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (65).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (66).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (67).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (68).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (69).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (7).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (71).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (72).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (73).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (74).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (75).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (76).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (77).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (78).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (79).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (70).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (8).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (80).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (81).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (82).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (83).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (84).jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc.jpeg" alt="软包床">
+    </div>
+    <div class="gallery-item" data-category="软包床" onclick="openModal(this)">
+        <img src="tp/chuang/rc (9).jpeg" alt="软包床">
+    </div>
+
+    <!-- 实木床 -->
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (1).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (1).JPG" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (10).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (11).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (12).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (13).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (14).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (15).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (16).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (2).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (2).JPG" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (3).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (3).JPG" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (4).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (4).JPG" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (5).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (6).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (7).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (8).jpeg" alt="实木床">
+    </div>
+    <div class="gallery-item" data-category="实木床" onclick="openModal(this)">
+        <img src="tp/chuang/smc (9).jpeg" alt="实木床">
+    </div>
+    <!-- 上下铺 -->
+    <div class="gallery-item" data-category="上下铺" onclick="openModal(this)">
+        <img src="tp/chuang/sxp (1).JPG" alt="上下铺">
+    </div>
+    <div class="gallery-item" data-category="上下铺" onclick="openModal(this)">
+        <img src="tp/chuang/sxp (1).jpeg" alt="上下铺">
+    </div>
+    <div class="gallery-item" data-category="上下铺" onclick="openModal(this)">
+        <img src="tp/chuang/sxp (2).jpeg" alt="上下铺">
+    </div>
+
+    <!-- 沙发 -->
+
+    <!-- 布沙发 -->
+     <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/pbsf.jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/pbsf.jpg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (1).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (1).JPG" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (2).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (3).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (4).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (5).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (6).jpeg" alt="布沙发">
+    </div>
+    <div class="gallery-item" data-category="布沙发" onclick="openModal(this)">
+        <img src="tp/sf/bsf (7).jpeg" alt="布沙发">
+    </div>
+
+    <!-- 皮沙发 -->
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/pbsf.jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/pbsf.jpg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (1).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (2).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (3).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (4).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (5).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (6).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (8).JPG" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (1).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (10).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (11).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (12).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (13).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (14).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (15).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (16).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (17).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (18).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (19).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (2).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (20).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (21).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (22).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (23).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (24).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (25).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (26).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (27).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (28).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (29).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (3).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (30).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (31).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (32).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (33).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (34).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (35).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (36).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (37).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (38).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (39).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (4).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (40).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (41).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (42).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (43).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (5).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (6).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (7).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (8).jpeg" alt="皮沙发">
+    </div>
+    <div class="gallery-item" data-category="皮沙发" onclick="openModal(this)">
+        <img src="tp/sf/psf (9).jpeg" alt="皮沙发">
+    </div>
+
+    <!-- 餐桌 -->
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (1).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (1).JPG" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (10).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (11).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (12).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (13).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (14).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (15).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (16).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (17).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (18).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (19).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (2).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (20).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (21).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (22).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (23).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (24).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (25).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (3).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (3).JPG" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (4).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (4).JPG" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (5).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (5).JPG" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (6).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (7).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (8).jpeg" alt="餐桌">
+    </div>
+    <div class="gallery-item" data-category="餐桌" onclick="openModal(this)">
+        <img src="tp/cz/cz (9).jpeg" alt="餐桌">
+    </div>
+
+    <!-- 大柜 -->
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (1).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (2).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (3).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (4).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (5).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (6).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (7).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg (8).jpeg" alt="大柜">
+    </div>
+    <div class="gallery-item" data-category="大柜" onclick="openModal(this)">
+        <img src="tp/dg/dg.JPG" alt="大柜">
+    </div>
+
+    <!-- 茶几电视柜斗柜等 -->
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (1).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (10).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (11).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (12).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (13).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (2).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (3).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (4).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (5).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (6).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (7).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (8).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+    <div class="gallery-item" data-category="茶几电视柜斗柜等" onclick="openModal(this)">
+        <img src="tp/cjdsg/cj (9).jpeg" alt="茶几电视柜斗柜等">
+    </div>
+
+    <!-- 梳妆台 -->
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (1).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (10).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (11).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (2).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (3).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (4).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (5).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (6).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (7).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (8).jpeg" alt="梳妆台">
+    </div>
+    <div class="gallery-item" data-category="梳妆台" onclick="openModal(this)">
+        <img src="tp/szt/szt (9).jpeg" alt="梳妆台">
+    </div>
+</div>
+
 <div class="modal" id="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img id="modalImg">
@@ -338,51 +1095,69 @@
 </div>
 
 <script>
-    // 初始化显示全部
     document.addEventListener('DOMContentLoaded', () => filter('all'));
 
-    // 手机端切换区域时自动关闭其他区域
-    function toggleMobileMenu(el) {
-        const currentItem = el.closest('.menu-item');
-        const isActive = currentItem.classList.contains('active');
-        
-        // 先关闭所有区域
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        
-        // 如果当前不是激活状态，再打开它
-        if (!isActive) {
-            currentItem.classList.add('active');
-        }
-    }
-
-    // 筛选小区图片，并自动关闭所有菜单
-    function filter(category) {
+    // 点击大分类：显示该类别下所有
+    function filterCategory(mainCat) {
         const items = document.querySelectorAll('.gallery-item');
         const btns = document.querySelectorAll('.menu-btn');
+        const banner = document.getElementById('banner');
 
         btns.forEach(btn => btn.classList.remove('active'));
-        if (event) event.target.closest('button').classList.add('active');
+        if(event) event.target.closest('button').classList.add('active');
+
+        banner.classList.add('hide-banner');
+
+        let allCats = {
+            '床': ['软包床', '实木床', '上下铺','床架'],
+            '沙发': ['皮沙发', '布沙发'],
+            '餐桌': ['餐桌'],
+            '大柜': ['大柜'],
+            '梳妆台': ['梳妆台'],
+            '茶几电视柜斗柜等': ['茶几电视柜斗柜等']
+        };
 
         items.forEach(item => {
-            const cat = item.dataset.category;
-            if (category === 'all' || cat === category) {
+            let cat = item.dataset.category;
+            if(allCats[mainCat].includes(cat)){
                 item.classList.add('show');
-            } else {
+            }else{
                 item.classList.remove('show');
             }
         });
 
-        // 点击小区后自动关闭所有展开的菜单
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        // 手机端导航栏收起
+        document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
         document.querySelector('.nav-menu').classList.remove('active');
     }
 
-    // 放大查看
+    // 点击小分类：只显示当前
+    function filter(category) {
+        const items = document.querySelectorAll('.gallery-item');
+        const btns = document.querySelectorAll('.menu-btn');
+        const banner = document.getElementById('banner');
+
+        btns.forEach(btn => btn.classList.remove('active'));
+        if(event) event.target.closest('button').classList.add('active');
+
+        if(category === 'all'){
+            banner.classList.remove('hide-banner');
+        }else{
+            banner.classList.add('hide-banner');
+        }
+
+        items.forEach(item => {
+            let cat = item.dataset.category;
+            if(category === 'all' || cat === category){
+                item.classList.add('show');
+            }else{
+                item.classList.remove('show');
+            }
+        });
+
+        document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+        document.querySelector('.nav-menu').classList.remove('active');
+    }
+
     function openModal(item) {
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modalImg');
